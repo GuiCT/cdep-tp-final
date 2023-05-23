@@ -50,8 +50,8 @@ public class TCPServer implements Runnable {
 
     private void updateStreams(Socket clientSocket) throws IOException {
         System.out.println("Updating streams");
-        this.objIS = new ObjectInputStream(clientSocket.getInputStream());
         this.objOS = new ObjectOutputStream(clientSocket.getOutputStream());
+        this.objIS = new ObjectInputStream(clientSocket.getInputStream());
     }
 
     private Object receiveTaskAndExecute() throws IOException {
