@@ -78,10 +78,10 @@ public class PanelStats extends JPanel {
     private void updateTable(Stats stats) {
         DefaultTableModel tableModel = new DefaultTableModel(
                 new Object[][]{
-                        {"Soma", stats.sum},
-                        {"Média", stats.mean},
-                        {"Desvio padrão", stats.std},
-                        {"Quantidade", stats.count}
+                        {"Soma", stats.sum()},
+                        {"Média", stats.mean()},
+                        {"Desvio padrão", stats.std()},
+                        {"Quantidade", stats.count()}
                 },
                 new Object[]{"Estatística", "Valor"}
         ) {

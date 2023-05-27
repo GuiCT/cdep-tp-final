@@ -76,7 +76,7 @@ public class PanelODE extends JPanel {
             objOS.writeObject(rk);
             objOS.flush();
             ODEResult result = (ODEResult) objIS.readObject();
-            XYChart chart = QuickChart.getChart("Gráfico", "t", "u", "u(t)", result.t, result.u);
+            XYChart chart = QuickChart.getChart("Gráfico", "t", "u", "u(t)", result.t(), result.u());
             chart.getStyler().setXAxisDecimalPattern("#.##");
             this.remove(this.chartPanel);
             this.chartPanel = new XChartPanel<>(chart);
