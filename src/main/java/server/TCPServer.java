@@ -17,6 +17,7 @@ public class TCPServer implements Runnable {
     private final IComputeEngine computeEngine;
     private ObjectInputStream objIS;
     private ObjectOutputStream objOS;
+
     public TCPServer() throws IOException, NotBoundException {
         this.serverSocket = new ServerSocket(7777);
         Registry rmiRegistry = LocateRegistry.getRegistry("localhost", 1099);

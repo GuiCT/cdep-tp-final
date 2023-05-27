@@ -4,7 +4,6 @@ import interfaces.IOrdinaryDifferentialEquation;
 import org.knowm.xchart.QuickChart;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
-import org.knowm.xchart.XYSeries;
 import services.RungeKutta;
 import services.odes.LogisticCurve;
 import utils.ODEResult;
@@ -18,8 +17,6 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class PanelODE extends JPanel {
-    private final JPanel btnsPanel;
-    private final JButton btnSelectFunction;
     private final JButton btnCalculateRK;
     private IOrdinaryDifferentialEquation function;
     private Double tInitial;
@@ -30,32 +27,32 @@ public class PanelODE extends JPanel {
 
     public PanelODE() {
         super();
-        BorderLayout layoutMain = new BorderLayout();
-        this.setLayout(layoutMain);
 
-        this.btnsPanel = new JPanel();
+        JPanel btnsPanel = new JPanel();
+        JButton btnSelectFunction = new JButton("Selecionar função");
+        this.btnCalculateRK = new JButton("Calcular com Runge-Kutta");
+
+        btnSelectFunction.addActionListener(this::selectFunction);
+        this.btnCalculateRK.addActionListener(this::setParametersAndSendTask);
+        this.btnCalculateRK.setEnabled(false);
+
         FlowLayout layoutBtns = new FlowLayout();
         layoutBtns.setVgap(5);
         layoutBtns.setHgap(5);
-        this.btnsPanel.setLayout(layoutBtns);
-        this.btnSelectFunction = new JButton("Selecionar função");
-        this.btnCalculateRK = new JButton("Calcular com Runge-Kutta");
-        this.btnsPanel.add(this.btnSelectFunction);
-        this.btnsPanel.add(this.btnCalculateRK);
-        this.add(this.btnsPanel, BorderLayout.NORTH);
+        btnsPanel.setLayout(layoutBtns);
+        BorderLayout layoutMain = new BorderLayout();
+        this.setLayout(layoutMain);
 
-        // Create empty chart
-        // Get width and height of the panel
+        btnsPanel.add(btnSelectFunction);
+        btnsPanel.add(this.btnCalculateRK);
+
+        this.add(btnsPanel, BorderLayout.NORTH);
         this.chartPanel = new JPanel();
         this.add(this.chartPanel, BorderLayout.CENTER);
-
-        this.btnSelectFunction.addActionListener(this::selectFunction);
-        this.btnCalculateRK.addActionListener(this::setParametersAndSendTask);
-        this.btnCalculateRK.setEnabled(false);
     }
 
     private void selectFunction(ActionEvent e) {
-        String[] options = {"Curva Logística"};
+        String[] options = {"Curva Logística", "Polinomial"};
         int option = JOptionPane.showOptionDialog(
                 this,
                 "Selecione a função",
@@ -65,8 +62,9 @@ public class PanelODE extends JPanel {
                 null,
                 options,
                 null);
-        if (option == 0) {
-            this.createLogisticCurve();
+        switch (option) {
+            case 0 -> this.createLogisticCurve();
+            case 1 -> this.createPolynomial();
         }
     }
 
@@ -83,6 +81,7 @@ public class PanelODE extends JPanel {
             this.remove(this.chartPanel);
             this.chartPanel = new XChartPanel<>(chart);
             this.add(this.chartPanel, BorderLayout.CENTER);
+            this.revalidate();
         } catch (IOException | ClassNotFoundException ex) {
             throw new RuntimeException(ex);
         }
@@ -106,7 +105,20 @@ public class PanelODE extends JPanel {
         int result = JOptionPane.showConfirmDialog(this, myPanel,
                 "Insira os valores de R e K", JOptionPane.OK_CANCEL_OPTION);
         if (result == JOptionPane.OK_OPTION) {
-            this.function = new LogisticCurve(Double.parseDouble(rField.getText()), Double.parseDouble(kField.getText()));
+            this.function = new LogisticCurve(
+                    Double.parseDouble(rField.getText()),
+                    Double.parseDouble(kField.getText())
+            );
+            this.btnCalculateRK.setEnabled(true);
+        }
+    }
+
+    private void createPolynomial() {
+        CreatePolynomial createPolynomial = new CreatePolynomial();
+        int result = JOptionPane.showConfirmDialog(this, createPolynomial,
+                "Insira os coeficientes do polinômio", JOptionPane.OK_CANCEL_OPTION);
+        if (result == JOptionPane.OK_OPTION) {
+            this.function = createPolynomial.getPolynomial();
             this.btnCalculateRK.setEnabled(true);
         }
     }
