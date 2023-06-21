@@ -8,5 +8,7 @@ import java.io.Serializable;
  * @param <T>
  */
 public interface ITask<T> extends Serializable {
+    String getTaskName();
+
     T execute();
 }

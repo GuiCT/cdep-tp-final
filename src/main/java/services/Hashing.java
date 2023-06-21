@@ -4,7 +4,6 @@ import interfaces.ITask;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
@@ -20,70 +19,33 @@ public class Hashing implements ITask<String> {
     }
 
     @Override
+    public String getTaskName() {
+        return "Hash de um arquivo";
+    }
+
+    @Override
     public String execute() {
         try {
-            return switch (algorithm) {
-                case MD5 -> md5();
-                case SHA1 -> sha1();
-                case SHA256 -> sha256();
-            };
+            return this.doHash(this.algorithm);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    private String md5() throws NoSuchAlgorithmException, IOException {
-        MessageDigest md = MessageDigest.getInstance("MD5");
+    private String doHash(HashingAlgorithm hashAlgo) throws NoSuchAlgorithmException, IOException {
+        MessageDigest md = switch (hashAlgo) {
+            case MD5 -> MessageDigest.getInstance("MD5");
+            case SHA1 -> MessageDigest.getInstance("SHA-1");
+            case SHA256 -> MessageDigest.getInstance("SHA-256");
+            case SHA512 -> MessageDigest.getInstance("SHA-512");
+        };
         FileInputStream fis = new FileInputStream(fileToBeHashed);
         DigestInputStream dis = new DigestInputStream(fis, md);
 
         byte[] buffer = new byte[8192];
-        while (dis.read(buffer) != -1) {}
-
-        byte[] hashBytes = md.digest();
-
-        StringBuilder sb = new StringBuilder();
-        for (byte b : hashBytes) {
-            sb.append(String.format("%02x", b));
+        while (dis.read(buffer) != -1) {
         }
-
-        String hash = sb.toString();
-        dis.close();
-        fis.close();
-
-        return hash;
-    }
-
-    private String sha1() throws NoSuchAlgorithmException, IOException {
-        MessageDigest md = MessageDigest.getInstance("SHA-1");
-        FileInputStream fis = new FileInputStream(fileToBeHashed);
-        DigestInputStream dis = new DigestInputStream(fis, md);
-
-        byte[] buffer = new byte[8192];
-        while (dis.read(buffer) != -1) {}
-
-        byte[] hashBytes = md.digest();
-
-        StringBuilder sb = new StringBuilder();
-        for (byte b : hashBytes) {
-            sb.append(String.format("%02x", b));
-        }
-
-        String hash = sb.toString();
-        dis.close();
-        fis.close();
-
-        return hash;
-    }
-
-    private String sha256() throws NoSuchAlgorithmException, IOException {
-        MessageDigest md = MessageDigest.getInstance("SHA-256");
-        FileInputStream fis = new FileInputStream(fileToBeHashed);
-        DigestInputStream dis = new DigestInputStream(fis, md);
-
-        byte[] buffer = new byte[8192];
-        while (dis.read(buffer) != -1) {}
 
         byte[] hashBytes = md.digest();
 

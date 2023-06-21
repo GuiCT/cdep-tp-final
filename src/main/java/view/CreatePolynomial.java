@@ -117,7 +117,8 @@ public class CreatePolynomial extends JPanel {
             panel.add(subPanel);
         }
 
-        int result = JOptionPane.showConfirmDialog(null, panel, "Insira os coeficientes", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        int result = JOptionPane.showConfirmDialog(null, panel, "Insira os coeficientes", JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.PLAIN_MESSAGE);
         if (result == JOptionPane.OK_OPTION) {
             if (source == this.btnInsertTCoefficients) {
                 this.tCoefficients = new Vector<>();

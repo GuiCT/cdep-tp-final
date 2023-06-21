@@ -13,12 +13,18 @@ public class RungeKutta implements ITask<ODEResult> {
     private final Double uInitial;
     private final IOrdinaryDifferentialEquation derivativeFunction;
 
-    public RungeKutta(Double tInitial, Double tFinal, Double step, Double uInitial, IOrdinaryDifferentialEquation derivativeFunction) {
+    public RungeKutta(Double tInitial, Double tFinal, Double step, Double uInitial,
+            IOrdinaryDifferentialEquation derivativeFunction) {
         this.tInitial = tInitial;
         this.tFinal = tFinal;
         this.step = step;
         this.uInitial = uInitial;
         this.derivativeFunction = derivativeFunction;
+    }
+
+    @Override
+    public String getTaskName() {
+        return "Runge-Kutta 4 para solução de EDOs";
     }
 
     @Override

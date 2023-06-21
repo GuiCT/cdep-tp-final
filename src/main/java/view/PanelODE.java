@@ -52,7 +52,7 @@ public class PanelODE extends JPanel {
     }
 
     private void selectFunction(ActionEvent e) {
-        String[] options = {"Curva Logística", "Polinomial"};
+        String[] options = { "Curva Logística", "Polinomial" };
         int option = JOptionPane.showOptionDialog(
                 this,
                 "Selecione a função",
@@ -107,8 +107,7 @@ public class PanelODE extends JPanel {
         if (result == JOptionPane.OK_OPTION) {
             this.function = new LogisticCurve(
                     Double.parseDouble(rField.getText()),
-                    Double.parseDouble(kField.getText())
-            );
+                    Double.parseDouble(kField.getText()));
             this.btnCalculateRK.setEnabled(true);
         }
     }

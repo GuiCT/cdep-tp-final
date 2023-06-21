@@ -34,6 +34,11 @@ public class BasicStats implements ITask<Stats> {
     }
 
     @Override
+    public String getTaskName() {
+        return "Estatísticas de um vetor";
+    }
+
+    @Override
     public Stats execute() {
         calculateSum();
         calculateMean();

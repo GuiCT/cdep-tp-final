@@ -26,6 +26,8 @@ public class MainWindow extends JFrame {
         tabbedPane.addTab("Estatísticas de um vetor", panelStats);
         PanelODE panelODE = new PanelODE();
         tabbedPane.addTab("EDO", panelODE);
+        PanelHashing panelHashing = new PanelHashing();
+        tabbedPane.addTab("Hashing", panelHashing);
         tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 
         this.setSize(800, 600);

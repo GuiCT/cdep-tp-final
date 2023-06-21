@@ -77,14 +77,13 @@ public class PanelStats extends JPanel {
 
     private void updateTable(Stats stats) {
         DefaultTableModel tableModel = new DefaultTableModel(
-                new Object[][]{
-                        {"Soma", stats.sum()},
-                        {"Média", stats.mean()},
-                        {"Desvio padrão", stats.std()},
-                        {"Quantidade", stats.count()}
+                new Object[][] {
+                        { "Soma", stats.sum() },
+                        { "Média", stats.mean() },
+                        { "Desvio padrão", stats.std() },
+                        { "Quantidade", stats.count() }
                 },
-                new Object[]{"Estatística", "Valor"}
-        ) {
+                new Object[] { "Estatística", "Valor" }) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;

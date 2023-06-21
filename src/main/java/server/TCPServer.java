@@ -29,7 +29,9 @@ public class TCPServer implements Runnable {
             TCPServer tcpServer = new TCPServer();
             tcpServer.run();
         } catch (IOException | NotBoundException e) {
-            throw new RuntimeException(e);
+            System.out.println("Erro ao executar o servidor TCP");
+            System.out.println("Verifique se o Compute Engine está em execução");
+            e.printStackTrace();
         }
     }
 
@@ -38,11 +40,10 @@ public class TCPServer implements Runnable {
         while (true) {
             try {
                 updateStreams(this.serverSocket.accept());
-                System.out.println("New client connected");
                 Object result = this.receiveTaskAndExecute();
                 this.objOS.writeObject(result);
                 this.objOS.flush();
-                System.out.println("Task executed");
+                System.out.println("Tarefa executada");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -50,7 +51,7 @@ public class TCPServer implements Runnable {
     }
 
     private void updateStreams(Socket clientSocket) throws IOException {
-        System.out.println("Updating streams");
+        System.out.println("Novo cliente conectado");
         this.objOS = new ObjectOutputStream(clientSocket.getOutputStream());
         this.objIS = new ObjectInputStream(clientSocket.getInputStream());
     }
@@ -60,11 +61,13 @@ public class TCPServer implements Runnable {
         try {
             task = this.objIS.readObject();
         } catch (ClassNotFoundException e) {
+            System.out.println("Classe não encontrada");
             e.printStackTrace();
         }
         if (task instanceof ITask taskToExecute) {
             return computeEngine.executeTaskInEngine(taskToExecute);
         } else {
+            System.out.println("Objeto recebido não é instância de Task. Retornando null...");
             return null;
         }
     }
