@@ -12,6 +12,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+/**
+ * <p>
+ * Classe que representa o painel de hashing de arquivos.
+ * </p>
+ */
 public class PanelHashing extends JPanel {
     private final JPanel btnsPanel;
     private final JButton btnOpenFile;
@@ -43,6 +48,11 @@ public class PanelHashing extends JPanel {
         this.btnHashFile.setEnabled(false);
     }
 
+    /**
+     * Abre um JFileChooser para selecionar um arquivo
+     * 
+     * @param e Evento de clique no botão
+     */
     private void selectFile(ActionEvent e) {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Selecione um arquivo");
@@ -54,6 +64,11 @@ public class PanelHashing extends JPanel {
         }
     }
 
+    /**
+     * Envia uma requisição de hashing para o servidor
+     * 
+     * @param e Evento de clique no botão
+     */
     private void doHash(ActionEvent e) {
         HashingAlgorithm selectedHashingAlgorithm = this.choseHashingAlgorithm();
         if (selectedHashingAlgorithm == null) {
@@ -78,6 +93,11 @@ public class PanelHashing extends JPanel {
         }
     }
 
+    /**
+     * Abre um JOptionPane para escolher o algoritmo de hashing
+     * 
+     * @return Algoritmo de hashing escolhido
+     */
     private HashingAlgorithm choseHashingAlgorithm() {
         JPanel panel = new JPanel();
         BoxLayout layout = new BoxLayout(panel, BoxLayout.Y_AXIS);

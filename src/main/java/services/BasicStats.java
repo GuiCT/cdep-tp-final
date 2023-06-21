@@ -9,6 +9,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * <p>
+ * Classe que representa uma tarefa de cálculo de estatísticas básicas.
+ * </p>
+ * <p>
+ * As estatísticas básicas calculadas são:
+ * </p>
+ * <ul>
+ * <li>Soma</li>
+ * <li>Média</li>
+ * <li>Desvio padrão</li>
+ * </ul>
+ */
 public class BasicStats implements ITask<Stats> {
     private final List<Double> data;
     private double sum;
@@ -38,6 +51,7 @@ public class BasicStats implements ITask<Stats> {
         return "Estatísticas de um vetor";
     }
 
+    // Calcula cada uma das estatísticas
     @Override
     public Stats execute() {
         calculateSum();
@@ -47,14 +61,18 @@ public class BasicStats implements ITask<Stats> {
     }
 
     private void calculateSum() {
+        // Reduce inicia com 0.0 e soma cada elemento do vetor
         this.sum = data.stream().reduce(0.0, Double::sum);
     }
 
     private void calculateMean() {
+        // Média aritmética é a soma dos elementos dividido pelo número de elementos
         this.mean = sum / data.size();
     }
 
     private void calculateStd() {
+        // Desvio padrão é a raiz quadrada da soma dos quadrados
+        // das diferenças entre cada elemento e a média
         double sumOfSquaredDifferences = data.stream().reduce(0.0, (acc, value) -> acc + Math.pow(value - mean, 2));
         this.std = Math.sqrt(sumOfSquaredDifferences / data.size());
     }

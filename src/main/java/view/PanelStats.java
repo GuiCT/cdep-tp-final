@@ -13,6 +13,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+/**
+ * <p>
+ * Classe que representa o painel de estatísticas básicas.
+ * </p>
+ */
 public class PanelStats extends JPanel {
     private final JPanel btnsPanel;
     private final JButton btnOpenFile;
@@ -44,6 +49,11 @@ public class PanelStats extends JPanel {
         this.btnCalcStats.setEnabled(false);
     }
 
+    /**
+     * Abre um JFileChooser para selecionar um arquivo .csv
+     * 
+     * @param e Evento de clique no botão
+     */
     private void selectFile(ActionEvent e) {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Selecione um arquivo .csv");
@@ -56,6 +66,11 @@ public class PanelStats extends JPanel {
         }
     }
 
+    /**
+     * Envia uma tarefa de cálculo de estatísticas básicas para o servidor
+     * 
+     * @param e Evento de clique no botão
+     */
     private void calcStats(ActionEvent e) {
         try {
             Socket socket = new Socket("localhost", 7777);
@@ -75,6 +90,11 @@ public class PanelStats extends JPanel {
         }
     }
 
+    /**
+     * Atualiza a tabela de estatísticas
+     * 
+     * @param stats Estatísticas a serem exibidas
+     */
     private void updateTable(Stats stats) {
         DefaultTableModel tableModel = new DefaultTableModel(
                 new Object[][] {

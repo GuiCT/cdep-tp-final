@@ -3,6 +3,11 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * <p>
+ * Classe que representa a janela principal da aplicação.
+ * </p>
+ */
 public class MainWindow extends JFrame {
 
     public MainWindow() {

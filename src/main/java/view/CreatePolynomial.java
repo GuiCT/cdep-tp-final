@@ -7,14 +7,24 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.Vector;
 
+/**
+ * <p>
+ * Classe que representa o painel de criação de polinômios.
+ * </p>
+ */
 public class CreatePolynomial extends JPanel {
     private final JButton btnInsertUCoefficients;
     private final JButton btnInsertTCoefficients;
+    // Número de coeficientes para u e t
     private Integer nUCoefficients = 1;
     private Integer nTCoefficients = 1;
+    // Valores dos coeficientes de u e t
     private Vector<Double> uCoefficients;
     private Vector<Double> tCoefficients;
 
+    /**
+     * Realiza construção do JPanel
+     */
     public CreatePolynomial() {
         super();
         BoxLayout layout = new BoxLayout(this, BoxLayout.Y_AXIS);
@@ -34,6 +44,8 @@ public class CreatePolynomial extends JPanel {
         nUField.addChangeListener(e -> {
             JSpinner spinner = (JSpinner) e.getSource();
             int value = (Integer) spinner.getValue();
+            // Bloqueando valores negativos e desabilitando botão de inserção
+            // quando o número de coeficientes de u for 0
             if (value < 0) {
                 spinner.setValue(0);
                 this.nUCoefficients = 0;
@@ -49,6 +61,8 @@ public class CreatePolynomial extends JPanel {
         nTField.addChangeListener(e -> {
             JSpinner spinner = (JSpinner) e.getSource();
             int value = (Integer) spinner.getValue();
+            // Bloqueando valores negativos e desabilitando botão de inserção
+            // quando o número de coeficientes de t for 0
             if (value < 0) {
                 spinner.setValue(0);
                 this.nTCoefficients = 0;
@@ -89,11 +103,22 @@ public class CreatePolynomial extends JPanel {
         this.add(btnsPanel);
     }
 
+    /**
+     * Constrói um polinômio a partir dos coeficientes inseridos
+     * 
+     * @return Polinômio criado
+     */
     public Polynomial getPolynomial() {
         return new Polynomial(this.uCoefficients, this.tCoefficients);
     }
 
+    /**
+     * Insere os coeficientes de u ou t
+     * 
+     * @param e Evento de clique no botão de inserção
+     */
     private void insertCoefficients(ActionEvent e) {
+        // Identificação de qual botão foi clicado
         Object source = e.getSource();
         int quantity = source == this.btnInsertTCoefficients ? this.nTCoefficients : this.nUCoefficients;
         char variable = source == this.btnInsertTCoefficients ? 't' : 'u';

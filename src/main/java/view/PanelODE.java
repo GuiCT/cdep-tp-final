@@ -16,6 +16,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+/**
+ * <p>
+ * Classe que representa o painel de EDOs.
+ * </p>
+ */
 public class PanelODE extends JPanel {
     private final JButton btnCalculateRK;
     private IOrdinaryDifferentialEquation function;
@@ -51,6 +56,11 @@ public class PanelODE extends JPanel {
         this.add(this.chartPanel, BorderLayout.CENTER);
     }
 
+    /**
+     * Abre um JOptionPane para selecionar o tipo de função escolhido
+     * 
+     * @param e Evento de clique no botão
+     */
     private void selectFunction(ActionEvent e) {
         String[] options = { "Curva Logística", "Polinomial" };
         int option = JOptionPane.showOptionDialog(
@@ -68,6 +78,9 @@ public class PanelODE extends JPanel {
         }
     }
 
+    /**
+     * Envia os parâmetros de integração e a função para o servidor
+     */
     private void calcRK() {
         try (Socket socket = new Socket("localhost", 7777)) {
             ObjectOutputStream objOS = new ObjectOutputStream(socket.getOutputStream());
@@ -87,6 +100,10 @@ public class PanelODE extends JPanel {
         }
     }
 
+    /**
+     * Abre um JOptionPane para inserir os valores de R e K
+     * e cria uma instância de LogisticCurve
+     */
     private void createLogisticCurve() {
         JTextField rField = new JTextField(5);
         JTextField kField = new JTextField(5);
@@ -112,6 +129,9 @@ public class PanelODE extends JPanel {
         }
     }
 
+    /**
+     * Abre um JOptionPane para inserir os coeficientes do polinômio
+     */
     private void createPolynomial() {
         CreatePolynomial createPolynomial = new CreatePolynomial();
         int result = JOptionPane.showConfirmDialog(this, createPolynomial,
@@ -122,6 +142,11 @@ public class PanelODE extends JPanel {
         }
     }
 
+    /**
+     * Abre um JOptionPane para inserir os parâmetros de integração
+     * 
+     * @param e Evento de clique no botão
+     */
     private void setParametersAndSendTask(ActionEvent e) {
         JTextField tInitialField = new JTextField(5);
         JTextField tFinalField = new JTextField(5);
