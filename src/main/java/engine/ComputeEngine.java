@@ -32,9 +32,11 @@ public class ComputeEngine implements IComputeEngine {
     }
 
     public <T> T executeTaskInEngine(ITask<T> task) {
-        System.out.println("Executando task: " + task.getTaskName());
+        System.out.println("Recebida solicitação do servidor para executar a task " + task.getTaskName());
         // Implementação da *task* é feita a partir do método execute,
         // definido na interface ITask
-        return task.execute();
+        T retVal = task.execute();
+        System.out.println("Task " + task.getTaskName() + " executada com sucesso");
+        return retVal;
     }
 }

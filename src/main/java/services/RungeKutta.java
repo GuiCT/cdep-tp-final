@@ -4,6 +4,7 @@ import interfaces.IOrdinaryDifferentialEquation;
 import interfaces.ITask;
 import utils.ODEResult;
 
+import java.io.Serial;
 import java.util.Vector;
 
 /**
@@ -12,6 +13,8 @@ import java.util.Vector;
  * </p>
  */
 public class RungeKutta implements ITask<ODEResult> {
+    @Serial
+    private static final long serialVersionUID = 1L;
     // Intervalo de integração
     private final Double tInitial;
     private final Double tFinal;

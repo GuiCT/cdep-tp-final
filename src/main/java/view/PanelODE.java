@@ -87,8 +87,11 @@ public class PanelODE extends JPanel {
             ObjectInputStream objIS = new ObjectInputStream(socket.getInputStream());
             RungeKutta rk = new RungeKutta(this.tInitial, this.tFinal, this.step, this.uInitial, this.function);
             objOS.writeObject(rk);
+            System.out.println("Solicitado o serviço de resolução de EDO ao servidor");
             objOS.flush();
             ODEResult result = (ODEResult) objIS.readObject();
+            System.out.println("Recebido o resultado do servidor");
+            System.out.println("Realizando plotagem de gráfico dos resultados obtidos");
             XYChart chart = QuickChart.getChart("Gráfico", "t", "u", "u(t)", result.t(), result.u());
             chart.getStyler().setXAxisDecimalPattern("#.##");
             this.remove(this.chartPanel);

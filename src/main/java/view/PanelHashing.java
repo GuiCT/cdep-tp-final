@@ -82,8 +82,10 @@ public class PanelHashing extends JPanel {
             // Enviando operação
             Hashing hashService = new Hashing(file, selectedHashingAlgorithm);
             objOS.writeObject(hashService);
+            System.out.println("Solicitado o serviço de hashing de arquivos ao servidor");
             // Recebendo resposta
             String hashed = (String) objIS.readObject();
+            System.out.println("Recebido o resultado do servidor");
             this.textArea.setText(hashed);
             socket.close();
         } catch (IOException ex) {
@@ -107,7 +109,6 @@ public class PanelHashing extends JPanel {
         hashAlgComboBox.addItem("SHA-1");
         hashAlgComboBox.addItem("SHA-256");
         hashAlgComboBox.addItem("SHA-512");
-        hashAlgComboBox.addItem("SHA-1024");
         panel.add(new JLabel("Escolha o algoritmo de hashing:"));
         panel.add(hashAlgComboBox);
 

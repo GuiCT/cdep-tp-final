@@ -6,6 +6,7 @@ import utils.Stats;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +24,8 @@ import java.util.List;
  * </ul>
  */
 public class BasicStats implements ITask<Stats> {
+    @Serial
+    private static final long serialVersionUID = 1L;
     private final List<Double> data;
     private double sum;
     private double mean;

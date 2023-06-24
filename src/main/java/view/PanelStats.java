@@ -78,9 +78,11 @@ public class PanelStats extends JPanel {
             ObjectInputStream objIS = new ObjectInputStream(socket.getInputStream());
             // Enviando operação
             BasicStats basicStats = new BasicStats(this.file);
+            System.out.println("Solicitado o serviço de estatísticas de vetor ao servidor");
             objOS.writeObject(basicStats);
             // Recebendo resposta
             Stats stats = (Stats) objIS.readObject();
+            System.out.println("Recebido o resultado do servidor");
             this.updateTable(stats);
             socket.close();
         } catch (IOException ex) {

@@ -103,9 +103,12 @@ public class TCPServer implements Runnable {
         if (task instanceof ITask taskToExecute) {
             // Enviando task para o ComputeEngine
             // Automaticamente retorna o resultado da execução da task para o método run
-            return computeEngine.executeTaskInEngine(taskToExecute);
+            System.out.println("Enviado o objeto " + taskToExecute.getClass().getName() + " que tem o serviço " + taskToExecute.getTaskName());
+            Object retVal = computeEngine.executeTaskInEngine(taskToExecute);
+            System.out.println("Recebida a resposta do serviço " + taskToExecute.getTaskName());
+            return retVal;
         } else {
-            System.out.println("Objeto recebido não é instância de Task. Retornando null...");
+            System.out.println("Objeto recebido não é instância de ITask. Retornando null...");
             return null;
         }
     }
